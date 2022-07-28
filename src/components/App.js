@@ -3,11 +3,22 @@ import {useState} from 'react';
 
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [lastLetter, setlastLetter] = useState("");
+  const regexpLetter = /^[a-zA-Zñáéíóúü]$/
 
   const handleClick = () => {
-   
     setNumberOfErrors(numberOfErrors + 1);
   };
+
+  const handleInput = (ev) => {
+   const inputValue = ev.currentTarget.value;
+   const variableX = regexpLetter.test(inputValue); // devuelve true o false
+   console.log(variableX);
+   if (regexpLetter.test(inputValue)){
+    setlastLetter(inputValue)} else {setlastLetter("")};
+  };
+
+  /*match devuelve las ocurrencias de la Expresión Regular*/
 
   return (
     <div className="App">
@@ -52,6 +63,8 @@ function App() {
               type="text"
               name="last-letter"
               id="last-letter"
+              onChange={handleInput}
+              value={lastLetter}
             />
           </form>
         </section>
