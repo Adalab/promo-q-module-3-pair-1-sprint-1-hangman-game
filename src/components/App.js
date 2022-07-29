@@ -1,57 +1,68 @@
 import '../styles/App.scss';
-import {useState} from 'react';
+import { useState } from 'react';
 
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setlastLetter] = useState("");
+  const [word, setWord] = useState('katakroker');
+  const [userLetters, setUserLetters] = useState([]);
+
   const regexpLetter = /^[a-zA-Zñáéíóúü]$/
 
+
+  const renderSolutionLetters = () => {
+    const wordLetters = word.split('');
+    return wordLetters.map((letter) => {
+      if (userLetters.includes(letter)) { 
+        return <li className="letter">{letter}</li>
+    } else { 
+      return <li className = "letter"></li>
+    }});
+};
+
+  // const renderErrorLetters = () => {
+  //   return (userLetters.filter((letter) => {
+  //     if ()
+  //   })
+  // )};
+
   const handleClick = () => {
-    setNumberOfErrors(numberOfErrors + 1);
-  };
-
+  setNumberOfErrors(numberOfErrors + 1);
+};
   const handleInput = (ev) => {
-   const inputValue = ev.currentTarget.value;
-   const variableX = regexpLetter.test(inputValue); // devuelve true o false
-   console.log(variableX);
-   if (regexpLetter.test(inputValue)){
-    setlastLetter(inputValue)} else {setlastLetter("")};
-  };
+  const inputValue = ev.currentTarget.value;
+  const variableX = regexpLetter.test(inputValue); // devuelve true o false
+  console.log(variableX);
+  if (regexpLetter.test(inputValue)) {
+    setlastLetter(inputValue);
+    userLetters.push(inputValue);
+  } else { setlastLetter("") };
 
-  /*match devuelve las ocurrencias de la Expresión Regular*/
 
-  return (
-    <div className="App">
+};
+
+/*match devuelve las ocurrencias de la Expresión Regular*/
+
+return (
+  <div className="App">
     <div className="page">
       <header>
         <h1 className="header__title">Juego del ahorcado</h1>
-        
+
       </header>
       <main className="main">
         <section>
           <div className="solution">
             <h2 className="title">Solución:</h2>
+
             <ul className="letters">
-              <li className="letter">k</li>
-              <li className="letter">a</li>
-              <li className="letter"></li>
-              <li className="letter">a</li>
-              <li className="letter">k</li>
-              <li className="letter">r</li>
-              <li className="letter"></li>
-              <li className="letter">k</li>
-              <li className="letter">e</li>
-              <li className="letter">r</li>
+              {renderSolutionLetters()}
             </ul>
           </div>
           <div className="error">
             <h2 className="title">Letras falladas:</h2>
             <ul className="letters">
-              <li className="letter">f</li>
-              <li className="letter">q</li>
-              <li className="letter">h</li>
-              <li className="letter">p</li>
-              <li className="letter">x</li>
+              {/* {renderErrorLetters()} */}
             </ul>
           </div>
           <form className="form">
@@ -86,8 +97,8 @@ function App() {
         <button onClick={handleClick}>Incrementar</button>
       </main>
     </div>
-    </div>
-  );
+  </div>
+);
 }
 
 export default App;
